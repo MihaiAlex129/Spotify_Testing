@@ -47,7 +47,7 @@ class SpotifyTest(unittest.TestCase):
 
     def test_longest_track_lenght_shorter_than_5_minutes(self):
         response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
-        self.assertEqual(response.status_code, 200, "Status code is not the same")
+        self.assertEqual(response.status_code, 200, "Status code is not the same222")
 
         tracks=response.json()['items']
         max_duration = 0
