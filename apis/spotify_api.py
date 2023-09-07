@@ -1,4 +1,5 @@
 import requests
+from secret_credentials import _CLIENT_SECRET, _CLIENT_ID
 
 
 class SpotifyApi:
@@ -6,16 +7,18 @@ class SpotifyApi:
     _ALBUMS_ENDPOINT = "/albums"
     _ALBUMS_TRACKS_ENDPOINT = "/tracks"
     _ACCESS_TOKEN_URL = "https://accounts.spotify.com/api/token"
-    _CLIENT_ID = "5153633bb78349b7a86825e8494279d3"
-    _CLIENT_SECRET = "c9d424a8296f46dfa203bb2c372b420e"
+    _CLIENT_ID=_CLIENT_ID
+    _CLIENT_SECRET=_CLIENT_SECRET
 
     def get_album_route(self, album_id):
         return self._BASE_URL + self._ALBUMS_ENDPOINT + f"/{album_id}"
 
     def get_albums(self, album_id, access_token):
         URL = self.get_album_route(album_id)
+
+        #alta varianta
         # URL = self._BASE_URL + self._ALBUMS_ENDPOINT + f"/{album_id}"
-        # URL = self._BASE_URL + self._ALBUMS_ENDPOINT + "/4aawyAB9vmqN3uQ7FjRGTy"      # asta este o alta varinata
+        # URL = self._BASE_URL + self._ALBUMS_ENDPOINT + "/4aawyAB9vmqN3uQ7FjRGTy"
 
         headers_token = {
             'Authorization': f'Bearer {access_token}'
