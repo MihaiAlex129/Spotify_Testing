@@ -10,7 +10,6 @@ class SpotifyTest(unittest.TestCase):
         new_val = value / 1000
         return new_val
 
-
     def setUp(self) -> None:
         self.spotify = SpotifyApi()
         if self.accessToken == '':
@@ -35,30 +34,29 @@ class SpotifyTest(unittest.TestCase):
         self.assertEqual(response.json()['error']['message'], 'invalid id', "Error message is not the same")
 
     def test_track_lenght(self):
-        response=self.spotify.get_albums_tracks(secret_credentials.album_id,access_token=self.accessToken)
+        response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
-        first_track_len_ms=response.json()['items'][0]['duration_ms']
-        first_track_len= self.ms_to_s(first_track_len_ms)
-        second_track_len_ms=response.json()['items'][1]['duration_ms']
-        second_track_len= self.ms_to_s(second_track_len_ms)
-        self.assertGreaterEqual(first_track_len,second_track_len,"first track is shorter than the second")
-        self.assertLessEqual(first_track_len,second_track_len, "first track is longer than the second")
-
+        first_track_len_ms = response.json()['items'][0]['duration_ms']
+        first_track_len = self.ms_to_s(first_track_len_ms)
+        second_track_len_ms = response.json()['items'][1]['duration_ms']
+        second_track_len = self.ms_to_s(second_track_len_ms)
+        self.assertGreaterEqual(first_track_len, second_track_len, "first track is shorter than the second")
+        self.assertLessEqual(first_track_len, second_track_len, "first track is longer than the second")
 
     def test_longest_track_lenght_shorter_than_5_minutes(self):
         response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
 
-        tracks=response.json()['items']
+        tracks = response.json()['items']
         max_duration = 0
-        track_name=None
+        track_name = None
 
         for track in tracks:
-            track_duration_ms=track['duration_ms']
-            if track_duration_ms>max_duration:
-                max_duration=track_duration_ms
-                track_name=track['name']
+            track_duration_ms = track['duration_ms']
+            if track_duration_ms > max_duration:
+                max_duration = track_duration_ms
+                track_name = track['name']
 
-        max_duration_s=max_duration/60000               #CONVERTING MS TO MINUTES
+        max_duration_s = max_duration / 60000  # CONVERT MS TO MINUTES
 
-
+        self.assertLess(max_duration_s, 5, f"The track '{track_name}' duration is longer than 5 minutes")
