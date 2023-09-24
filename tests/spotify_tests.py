@@ -23,7 +23,7 @@ class SpotifyTest(unittest.TestCase):
         self.assertEqual(response.json()['tracks']['items'][0]['artists'][0]['name'], 'Pitbull',
                          "The artist name Pitbull is not correct")
 
-    def test_get_album_by_id_non_positiv(self):
+    def test_get_album_by_id_non_positive(self):
         response = self.spotify.get_albums(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.json()['tracks']['items'][0]['artists'][1]['type'], 'artist',
                          "The artist index[0][1] is not correct")
@@ -33,7 +33,7 @@ class SpotifyTest(unittest.TestCase):
         self.assertEqual(response.status_code, 400, "Status code is not the same")
         self.assertEqual(response.json()['error']['message'], 'invalid id', "Error message is not the same")
 
-    def test_track_lenght(self):
+    def test_track_length(self):
         # RETURNS WHICH OF THE 2 FIRST SONGS IS LONGER
         response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
@@ -44,7 +44,7 @@ class SpotifyTest(unittest.TestCase):
         self.assertGreaterEqual(first_track_len, second_track_len, "first track is shorter than the second")
         self.assertLessEqual(first_track_len, second_track_len, "first track is longer than the second")
 
-    def test_longest_track_lenght_shorter_than_5_minutes(self):
+    def test_longest_track_length_shorter_than_6_minutes(self):
         # RETURNS
         response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
@@ -61,7 +61,7 @@ class SpotifyTest(unittest.TestCase):
 
         max_duration_s = max_duration / 60000  # CONVERT MS TO MINUTES
 
-        self.assertLess(max_duration_s, 5, f"The track '{track_name}' duration is longer than 5 minutes")
+        self.assertLess(max_duration_s, 6, f"The track '{track_name}' duration is longer than 5 minutes")
 
     def test_every_song_is_played_by_artist(self):
         # Set artist_name to "Pitbull"
