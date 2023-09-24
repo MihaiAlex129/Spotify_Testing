@@ -1,5 +1,5 @@
 import requests
-from secret_credentials import _CLIENT_SECRET, _CLIENT_ID
+from Spotify_Testing.secret_credentials import _CLIENT_SECRET, _CLIENT_ID
 
 
 class SpotifyApi:

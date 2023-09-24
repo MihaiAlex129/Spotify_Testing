@@ -1,6 +1,6 @@
 import unittest
-import secret_credentials
-from apis.spotify_api import SpotifyApi
+from Spotify_Testing import secret_credentials
+from Spotify_Testing.requests.spotify_api import SpotifyApi
 
 
 class SpotifyTest(unittest.TestCase):
@@ -34,6 +34,7 @@ class SpotifyTest(unittest.TestCase):
         self.assertEqual(response.json()['error']['message'], 'invalid id', "Error message is not the same")
 
     def test_track_lenght(self):
+        # RETURNS WHICH OF THE 2 FIRST SONGS IS LONGER
         response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
         first_track_len_ms = response.json()['items'][0]['duration_ms']
@@ -44,6 +45,7 @@ class SpotifyTest(unittest.TestCase):
         self.assertLessEqual(first_track_len, second_track_len, "first track is longer than the second")
 
     def test_longest_track_lenght_shorter_than_5_minutes(self):
+        # RETURNS
         response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
 
@@ -76,3 +78,4 @@ class SpotifyTest(unittest.TestCase):
             artist_on_track = track["artists"][0]["name"]
 
             # Compare the retrieved artist name with "Pitbull"
+            self.assertEqual(artist_on_track, artist_name, f"Song not played by {artist_name}: {track['name']}")
