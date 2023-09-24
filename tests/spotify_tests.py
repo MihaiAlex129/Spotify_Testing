@@ -60,3 +60,19 @@ class SpotifyTest(unittest.TestCase):
         max_duration_s = max_duration / 60000  # CONVERT MS TO MINUTES
 
         self.assertLess(max_duration_s, 5, f"The track '{track_name}' duration is longer than 5 minutes")
+
+    def test_every_song_is_played_by_artist(self):
+        # Set artist_name to "Pitbull"
+        artist_name = "Pitbull"
+
+        # Get the tracks for the album
+        tracks_response = self.spotify.get_albums_tracks(secret_credentials.album_id, access_token=self.accessToken)
+        self.assertEqual(tracks_response.status_code, 200, "Status code is not the same")
+        tracks_data = tracks_response.json()
+
+        # Check if every song in the album is played by the artist "Pitbull"
+        for track in tracks_data["items"]:
+            # Retrieve the first artist's name (indexed by 0) from the "artists" list
+            artist_on_track = track["artists"][0]["name"]
+
+            # Compare the retrieved artist name with "Pitbull"
