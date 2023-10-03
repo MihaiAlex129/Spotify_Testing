@@ -34,6 +34,14 @@ class SpotifyApi:
         }
         return requests.get(URL, headers=headers_token)
 
+    def get_second_albums(self, second_album_id, access_token):
+        URL = self.get_album_route(second_album_id)
+        headers_token = {
+            'Authorization': f'Bearer {access_token}'
+        }
+        return requests.get(URL, headers=headers_token)
+
+
     def get_access_token(self):
         URL = self._ACCESS_TOKEN_URL
 
