@@ -15,18 +15,18 @@ class SpotifyTest(unittest.TestCase):
         if self.accessToken == '':
             self.accessToken = self.spotify.get_access_token().json()['access_token']
 
-    def test_get_album_by_id_positive(self):
+    def test_get_albums_by_name_and_index(self):
         response = self.spotify.get_albums(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.status_code, 200, "Status code is not the same")
         self.assertEqual(response.json()['name'], "Global Warming", "Name of the album is not the same")
         self.assertEqual(response.json()['artists'][0]['type'], "artist", "The artist index[0] is not the same")
 
-    def test_get_album_by_id_non_positive(self):
+    def test_get_albums_by_id_non_positive(self):
         response = self.spotify.get_albums(secret_credentials.album_id, access_token=self.accessToken)
         self.assertEqual(response.json()['tracks']['items'][0]['artists'][1]['type'], 'artist',
                          "The artist index[0][1] is not correct")
 
-    def test_get_album_by_id_negative(self):
+    def test_get_albums_by_id_negative(self):
         response = self.spotify.get_albums("PYTA-TESTING", access_token=self.accessToken)
         self.assertEqual(response.status_code, 400, "Status code is not the same")
         self.assertEqual(response.json()['error']['message'], 'invalid id', "Error message is not the same")
@@ -45,6 +45,8 @@ class SpotifyTest(unittest.TestCase):
             r_msg = "first track is shorter than the second"
         elif first_track_len > second_track_len:
             r_msg = "first track is longer than the second"
+        else:
+            r_msg=0
         # r_msg value can be read as desired to check the result
         self.assertNotEqual(r_msg, 0, "invalid or equal track lengths")
 
@@ -121,3 +123,12 @@ class SpotifyTest(unittest.TestCase):
         mutual_tracks = set(first_list).intersection(second_list)
 
         self.assertGreater(len(mutual_tracks), 0, "Common elements found between the two lists")
+
+    def test_for_same_label(self):
+        first_response = self.spotify.get_albums(secret_credentials.album_id, access_token=self.accessToken)
+        second_response = self.spotify.get_second_albums(secret_credentials.second_album_id,
+                                                         access_token=self.accessToken)
+        self.assertEqual(first_response.status_code, 200, "Status code is not the same")
+        self.assertEqual(second_response.status_code, 200, "Status code is not the same")
+        self.assertEqual(first=first_response.json()['label'], second=second_response.json()['label'],
+                            msg="The tracks do not have the same label")
