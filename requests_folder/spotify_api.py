@@ -1,14 +1,13 @@
 import requests
-from Spotify_Testing.secret_credentials import _CLIENT_SECRET, _CLIENT_ID
-
+import secret_credentials
 
 class SpotifyApi:
     _BASE_URL = "https://api.spotify.com/v1"
     _ALBUMS_ENDPOINT = "/albums"
     _ALBUMS_TRACKS_ENDPOINT = "/tracks"
     _ACCESS_TOKEN_URL = "https://accounts.spotify.com/api/token"
-    _CLIENT_ID=_CLIENT_ID
-    _CLIENT_SECRET=_CLIENT_SECRET
+    _CLIENT_ID= secret_credentials._CLIENT_ID_DATA
+    _CLIENT_SECRET= secret_credentials._CLIENT_SECRET_DATA
 
     def get_album_route(self, album_id):
         return self._BASE_URL + self._ALBUMS_ENDPOINT + f"/{album_id}"

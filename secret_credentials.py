@@ -1,0 +1,4 @@
+album_id: str = "4aawyAB9vmqN3uQ7FjRGTy"
+second_album_id: str="2F7tejLHzTqFq2XLol9ZGy"
+_CLIENT_ID_DATA = "5153633bb78349b7a86825e8494279d3"
+_CLIENT_SECRET_DATA = "c9d424a8296f46dfa203bb2c372b420e"
