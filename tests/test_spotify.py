@@ -1,7 +1,7 @@
 import unittest
 
-import secret_credentials
-from requests_folder.spotify_api import SpotifyApi
+from Spotify_Testing import secret_credentials
+from Spotify_Testing.requests_folder.spotify_api import SpotifyApi
 
 
 class SpotifyTest(unittest.TestCase):

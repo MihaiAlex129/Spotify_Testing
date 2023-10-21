@@ -1,6 +1,5 @@
 import requests
-import secret_credentials
-
+from Spotify_Testing import secret_credentials
 class SpotifyApi:
     _BASE_URL = "https://api.spotify.com/v1"
     _ALBUMS_ENDPOINT = "/albums"
